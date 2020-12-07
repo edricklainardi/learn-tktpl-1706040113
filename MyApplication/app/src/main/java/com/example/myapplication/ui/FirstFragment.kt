@@ -6,20 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.example.myapplication.R
 import com.example.myapplication.data.Quote
 import com.example.myapplication.utilities.InjectorUtils
 import kotlinx.android.synthetic.main.fragment_first.*
-import kotlinx.android.synthetic.main.fragment_second.*
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
 class FirstFragment : Fragment() {
-
+    init {
+        System.loadLibrary("update")
+    }
+    external fun confirmation(toString: String): String
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
@@ -45,9 +46,12 @@ class FirstFragment : Fragment() {
         // When button is clicked, instantiate a Quote and add it to DB through the ViewModel
         button_add_quote.setOnClickListener {
             val quote = Quote(editText_quote.text.toString(), editText_author.text.toString())
+            var output = confirmation(editText_author.text.toString())
             viewModel.addQuote(quote)
             editText_quote.setText("")
             editText_author.setText("")
+            updateText.setText(output)
         }
     }
+
 }

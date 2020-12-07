@@ -5,6 +5,7 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
+    ndkVersion "22.0.6917172"
 
     defaultConfig {
         applicationId "com.example.myapplication"
@@ -28,6 +29,11 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+    externalNativeBuild {
+        cmake {
+            path file('src/main/java/com/example/myapplication/cpp/CMakeLists.txt')
+        }
     }
 }
 
